@@ -1,9 +1,30 @@
+'use client';
+
+import { useState } from "react";
 import Square from "./Square";
+import { calculateWinner } from "#/lib/getWinner";
+
+export type SquareState = "O" | "X" | null;
 
 export default function Board() {
-  const renderSquare = (i: number) => <Square />;
+  const [squares, setSquares] = useState<SquareState[]>(Array(9).fill(null));
+  const [xIsNext, setXIsNext] = useState<boolean>(true);
+  
+  const renderSquare = (i: number) => <Square value={squares[i]} onClick={() => handleClick(i)} />;
 
-  const status = 'Next player: X';
+  const handleClick = (i: number) => {
+    const sliceSquares = squares.slice();
+    /**
+     *
+     */
+    if (calculateWinner(squares) || squares[i]) return; 
+
+    sliceSquares[i] = xIsNext ? 'X' : 'O';
+    setSquares(sliceSquares);
+    setXIsNext(prev => !prev); 
+  };
+
+  const status = `Next player: ${xIsNext ? 'X' : 'O'}`;  
 
   return (
     <div>
