@@ -1,6 +1,6 @@
-import { SquareState } from "#/ui/Board";
+import { type Square } from "./data/square";
 
-export function calculateWinner(squares: SquareState[]) {
+export function calculateWinner(squares: Square[]) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -18,6 +18,6 @@ export function calculateWinner(squares: SquareState[]) {
       return squares[a];
     }
   }
-  
+
   return null;
 }

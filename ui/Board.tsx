@@ -1,34 +1,18 @@
 'use client';
 
-import { useState } from "react";
 import Square from "./Square";
-import { calculateWinner } from "#/lib/getWinner";
+import { type Square as SquareType } from "#/lib/data/square";
 
-export type SquareState = "O" | "X" | null;
+type Props = {
+  squares: SquareType[];
+  onClick: (i: number) => void; 
+};
 
-export default function Board() {
-  const [squares, setSquares] = useState<SquareState[]>(Array(9).fill(null));
-  const [xIsNext, setXIsNext] = useState<boolean>(true);
-  
-  const renderSquare = (i: number) => <Square value={squares[i]} onClick={() => handleClick(i)} />;
-
-  const handleClick = (i: number) => {
-    const sliceSquares = squares.slice();
-    /**
-     *
-     */
-    if (calculateWinner(squares) || squares[i]) return; 
-
-    sliceSquares[i] = xIsNext ? 'X' : 'O';
-    setSquares(sliceSquares);
-    setXIsNext(prev => !prev); 
-  };
-
-  const status = `Next player: ${xIsNext ? 'X' : 'O'}`;  
+export default function Board(props: Props) {
+  const renderSquare = (i: number) => <Square value={props.squares[i]} onClick={() => props.onClick(i)} />;
 
   return (
     <div>
-      <div className="status">{status}</div>
       <div className="board-row">
         {renderSquare(0)}
         {renderSquare(1)}

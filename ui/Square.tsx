@@ -1,7 +1,7 @@
-import { SquareState } from "./Board";
+import { type Square } from "#/lib/data/square";
 
 type Props = {
-  value: SquareState;
+  value: Square;
   onClick: () => void; 
 };
 
